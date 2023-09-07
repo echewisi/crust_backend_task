@@ -11,7 +11,7 @@ const router = express.Router();
 
 // User registration route
 router.post(
-    '/register',
+    'api/auth/register',
     [
         check('username', 'Username is required').notEmpty(),
         check('email', 'Valid email is required').isEmail(),
@@ -24,14 +24,14 @@ router.post(
 );
 
   // User login route
-    router.post('/login', authController.login);
+    router.post('api/auth/login', authController.login);
 
 // GitHub authentication route
-router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));
+router.get('api/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
 
 // GitHub callback route
 router.get(
-    '/github/callback',
+    'api/auth/github/callback',
         passport.authenticate('github', { failureRedirect: '/login' }),
         authController.oauthLogin,
     (req, res) => {

@@ -1,10 +1,24 @@
-module.exports={
-    development:{
-        host: 'localhost',
-        username: 'postgres',
-        password: '1234',
-        database: 'testdb',
-        dialect: 'postgres',
+const {Client}= require('pg');
 
+const client= new Client(
+    {
+        host: 'localhost',
+        user: 'postgres',
+        port: 5432,
+        password: "1234",
+        database: 'postgres'
     }
-}
+)
+
+client.connect( (err)=>{
+    if (err){
+        console.log("connection error", err.stack)
+    } else{
+        console.log("connected!")
+    }
+})
+
+
+module.exports= client;
+
+

@@ -16,18 +16,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// Database setup
-const { Client } = require('pg');
-const db = new Client({
-    connectionString: 'your-database-connection-string',
-});
-db.connect()
-    .then(() => {
-        console.log('Connected to the database');
-    })
-    .catch((err) => {
-        console.error('Error connecting to the database', err);
-    });
+
 
 // Initialize passport for OAuth
 app.use(passport.initialize());
