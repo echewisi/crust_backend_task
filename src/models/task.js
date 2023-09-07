@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config'); // Import your Sequelize configuration
+const sequelize = require('../config/config'); // Import your Sequelize configuration
 
 const Task = sequelize.define('Task', {
     title: {
