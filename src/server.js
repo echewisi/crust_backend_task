@@ -29,7 +29,7 @@ app.use('/api/protected', authMiddleware, protectedRouteHandler);
 
 // Define your API routes here
 app.use('/api/auth', require('./routes/authRoutes')); // Authentication routes
-app.use('/api/tasks', require('./routes/taskRoutes')); // Your resource routes (e.g., tasks)
+app.use('/api/tasks', require('./routes/taskRoutes')); // resource routes (tasks)
 
 
 // Use the error handling middleware at the end
