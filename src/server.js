@@ -29,7 +29,7 @@ db.connect()
 app.use(passport.initialize());
 
 // Define your API routes here
-app.use('/api/auth', require('./routes/auth')); // Authentication routes
+app.use('/api/auth', require('./routes/authRoutes')); // Authentication routes
 app.use('/api/tasks', require('./routes/tasks')); // Your resource routes (e.g., tasks)
 
 // Start the server
