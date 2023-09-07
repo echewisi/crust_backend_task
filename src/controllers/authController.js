@@ -2,7 +2,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const config = require('../config');
+const config = require('../config/jwtconfig');
 
 // User registration controller
 exports.register = async (req, res) => {
@@ -57,6 +57,62 @@ exports.login = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
+    }
+};
+
+exports.oauthLogin = async (req, res) => {
+    try {
+        // Extract user data from the OAuth provider's response
+        const { username, email, /* other relevant user data */ } = req.body;
+
+        // Check if the user already exists in your database
+        let user = await UserModel.findOne({ email });
+
+        if (!user) {
+            // If the user doesn't exist, create a new user account
+            user = new UserModel({
+                username,
+                email,
+                // Set other user properties based on the data received
+            });
+
+            await user.save();
+        }
+
+        // Generate a JWT token for the user
+        const token = jwt.sign({ userId: user._id }, config.jwtSecret, { expiresIn: '7d' });
+
+        // Respond with the JWT token
+        return res.status(200).json({ token });
+    } catch (error) {
+        console.error('Error during OAuth login:', error);
+        return res.status(500).json({ message: 'Server error' });
+    }
+};
+
+
+exports.logout = (req, res) => {
+    // Assuming you store the user's JWT token in a cookie or header
+    const token = req.cookies.jwt; // Change this according to how you store the token
+
+    if (!token) {
+        // If no token is present, the user is not logged in
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    try {
+        // Verify and decode the JWT token
+        jwt.verify(token, config.jwtSecret);
+
+        // Clear the JWT token (e.g., by removing the cookie or header)
+        res.clearCookie('jwt'); // Change this according to how you store the token
+
+        // Respond with a success message
+        return res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+        // If there's an error while verifying the token, consider it a server error
+        console.error('Error during logout:', error);
+        return res.status(500).json({ message: 'Server error' });
     }
 };
 

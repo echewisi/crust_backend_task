@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv= require('dotenv').config()
 const passport = require('passport'); // For OAuth
+const morgan= require('morgan')
+const specs= require('./swaggerConfig')
+const swaggerUI= require('swagger-ui-express')
 const authMiddleware = require('./middleware/authMiddleware');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const protectedRoute = require('./routes/protectedRoute'); // Import your protected route
@@ -16,6 +19,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+//serve swaggerUI documentation:
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 
 // Initialize passport for OAuth
