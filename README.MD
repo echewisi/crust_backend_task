@@ -62,6 +62,7 @@ Before you begin, ensure you have met the following requirements:
 
 # authentication
 To use the authentication features, you can make the following requests:
+you can head over to the requests.rest file to perfrom these operations or you can use POSTMAN OR THUNDERCLIENT(vscode users)
 
 1. Register a new user:
 POST http://localhost:3000/api/auth/register
