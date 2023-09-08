@@ -11,7 +11,7 @@ Your Application Name is a RESTful API service that allows users to perform vari
   - [Authentication](#authentication)
   - [Tasks](#tasks)
   - [Protected Routes](#protected-routes)
-- [API Documentation](#api-documentation)
+- [API Documentation(swagger)](#api-documentation)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -86,6 +86,7 @@ Content-Type: application/json
 GET http://localhost:3000/api/auth/github
 
 # tasks
+
 1. Create a new task (requires JWT token)
 POST http://localhost:3000/api/tasks/create
 Content-Type: application/json
@@ -96,5 +97,39 @@ Authorization: Bearer YOUR_JWT_TOKEN
     "description": "This is the first task"
 }
 
-2. 
+2. Get all tasks (requires JWT token)
+GET http://localhost:3000/api/tasks/list
+Authorization: Bearer YOUR_JWT_TOKEN
 
+3. Get a single task by ID (requires JWT token)
+GET http://localhost:3000/api/tasks/1
+Authorization: Bearer YOUR_JWT_TOKEN
+
+4.  Update a task by ID (requires JWT token)
+PUT http://localhost:3000/api/tasks/1
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN
+
+{
+    "title": "Updated Task 1",
+    "description": "This is the updated first task"
+}
+
+5. Delete a task by ID (requires JWT token)
+DELETE http://localhost:3000/api/tasks/1
+Authorization: Bearer YOUR_JWT_TOKEN
+
+# protected-routes
+To access a protected route, you need a valid JWT token:
+
+Access a protected route (requires JWT token)
+
+GET http://localhost:3000/api/protected-resource
+Authorization: Bearer YOUR_JWT_TOKEN
+
+### API DOCUMENTATION
+For detailed API documentation, you can visit To explore our API in detail, please refer to the [Swagger API Documentation](http://localhost:3000/api-docs) while the application is running. It provides information about available endpoints, request parameters, and responses.
+
+You can also interact with our API using the embedded Swagger UI below(if you want to):
+
+<iframe src="http://localhost:3000/api-docs" style="width: 100%; height: 500px;"></iframe>
