@@ -1,6 +1,5 @@
-// middleware/authMiddleware.js
 const jwt = require('jsonwebtoken');
-const config = require('../config/jwtconfig'); // Your configuration file
+const config = require('../config/jwtconfig'); 
 
 module.exports = (req, res, next) => {
     const token = req.header('Authorization');
@@ -9,8 +8,11 @@ module.exports = (req, res, next) => {
         return res.status(401).json({ message: 'Authentication token is missing' });
     }
 
+
+    const tokenWithoutPrefix = token.replace('Bearer ', '');
+
     try {
-        const decoded = jwt.verify(token, config.jwtSecret);
+        const decoded = jwt.verify(tokenWithoutPrefix, config.jwtSecret);
         req.user = decoded.user; // Attach the user object to the request
         next();
     } catch (error) {

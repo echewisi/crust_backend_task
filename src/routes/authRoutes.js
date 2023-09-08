@@ -49,7 +49,7 @@ const router = express.Router();
  */
 
 router.post(
-    'api/auth/register',
+    '/api/auth/register',
     [
         check('username', 'Username is required').notEmpty(),
         check('email', 'Valid email is required').isEmail(),
@@ -92,7 +92,7 @@ router.post(
  *       500:
  *         description: Server error
  */
-    router.post('api/auth/login', authController.login);
+    router.post('/api/auth/login', authController.login);
 
 // GitHub authentication route
 /**
@@ -107,7 +107,13 @@ router.post(
  *       500:
  *         description: Server error
  */
-router.get('api/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
+router.get('/api/auth/github', passport.authenticate('github', { scope: ['user:email'], 
+callbackURL: 'http://localhost:3000/auth/github/callback' }),
+(req, res) => {
+    // Successful authentication, you can redirect or respond as needed
+    res.redirect('/dashboard'); // Redirect to the dashboard or another page
+}
+);
 
 // GitHub callback route
 /**
@@ -123,7 +129,7 @@ router.get('api/auth/github', passport.authenticate('github', { scope: ['user:em
  *         description: Server error
  */
 router.get(
-    'api/auth/github/callback',
+    '/api/auth/github/callback',
         passport.authenticate('github', { failureRedirect: '/login' }),
         authController.oauthLogin,
     (req, res) => {
@@ -148,6 +154,6 @@ router.get(
  *       500:
  *         description: Server error
  */
-router.get('/logout', authMiddleware, authController.logout);
+router.get('api/auth/logout', authMiddleware, authController.logout);
 
 module.exports = router;

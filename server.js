@@ -5,19 +5,24 @@ const cors = require('cors');
 const dotenv= require('dotenv').config()
 const passport = require('passport'); // For OAuth
 const morgan= require('morgan')
-const specs= require('./swaggerConfig')
+const specs= require('./src/swaggerConfig')
 const swaggerUI= require('swagger-ui-express')
-const authMiddleware = require('./middleware/authMiddleware');
-const errorMiddleware = require('./middleware/errorMiddleware');
-const protectedRoute = require('./routes/protectedRoute'); // Import your protected route
-const corsMiddleware = require('./middleware/corsMiddleware');
+const authMiddleware = require('./src/middleware/authMiddlewareware');
+const errorMiddleware = require('./src/middleware/errorMiddleware');
+const protectedRoute = require('./src/routes/protectedRoutes'); // Import your protected route
+const corsMiddleware = require('./src/middleware/corsMiddleware');
 
 // Initialize Express app
 const app = express();
 
+//corsmiddleware
+app.use(corsMiddleware()); // Correct the usage
+
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
+
+
 
 //serve swaggerUI documentation:
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
@@ -30,11 +35,11 @@ app.use(passport.initialize());
 app.use('/api', protectedRoute);
 
 // Use the authentication middleware for routes that require authentication
-app.use('/api/protected', authMiddleware, protectedRouteHandler);
+app.use('/api/protected', authMiddleware, protectedRoute);
 
 // Define your API routes here
-app.use('/api/auth', require('./routes/authRoutes')); // Authentication routes
-app.use('/api/tasks', require('./routes/taskRoutes')); // resource routes (tasks)
+app.use('/api/auth', require('./src/routes/authRoutes')); // Authentication routes
+app.use('/api/tasks', require('./src/routes/taskRoutes')); // resource routes (tasks)
 
 
 // Use the error handling middleware at the end

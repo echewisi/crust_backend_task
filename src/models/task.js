@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/config'); // Import your Sequelize configuration
+const User = require('./user');
 
 const Task = sequelize.define('Task', {
     title: {
@@ -13,4 +14,7 @@ const Task = sequelize.define('Task', {
 
 });
 
+Task.belongsTo(User, {
+    foreignKey: 'userId', 
+});
 module.exports = Task;
