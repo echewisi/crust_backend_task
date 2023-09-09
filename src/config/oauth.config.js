@@ -30,9 +30,14 @@ passport.use(
                         email: profile.emails ? profile.emails[0].value : null,
                         oauthProvider: 'github',
                         oauthProviderId: profile.id,
+                        oauthAccessToken: accessToken,
                     })
                     // You can save or retrieve user data in your database here
                     return done(null, user);
+                } else {
+                    // If the user exists, update the OAuth access token
+                    user.oauthAccessToken = accessToken;
+                    await user.save();
                 }
             } catch (error) {
                 return done(error)

@@ -108,7 +108,7 @@ router.post(
  *       500:
  *         description: Server error
  */
-router.get('/github', passport.authenticate('github', { scope: ['user:email'], 
+router.get('/github', oauthMiddleware, passport.authenticate('github', { scope: ['user:email'], 
 callbackURL: 'http://localhost:3000/auth/github/callback' }),
 (req, res) => {
     // Successful authentication, you can redirect or respond as needed
