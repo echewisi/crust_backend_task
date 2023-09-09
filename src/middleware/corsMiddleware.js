@@ -1,6 +1,11 @@
 const cors = require('cors');
 
-module.exports = cors({
-  origin: 'http://localhost:8000', // Replace with your client's URL
-  credentials: true, // Enable credentials (cookies, headers) for cross-origin requests
-});
+module.exports = function corsMiddleware() {
+  return (req, res, next) => {
+    if (req.headers.origin) {
+      cors()(req, res, next); // Apply cors middleware only if origin header is present
+    } else {
+      next(); // Continue to the next middleware if no origin header
+    }
+  };
+};

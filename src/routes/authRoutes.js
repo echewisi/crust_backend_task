@@ -1,6 +1,7 @@
 // routes/authRoutes.js
 const express = require('express');
 const passport = require('../config/oauth.config'); // Import the GitHub OAuth configuration
+const User= require('../models/user')
 const { check } = require('express-validator');
 const authMiddleware = require('../middleware/authMiddleware');
 const validationMiddleware = require('../middleware/validationMiddleware');
@@ -49,7 +50,7 @@ const router = express.Router();
  */
 
 router.post(
-    '/api/auth/register',
+    '/register',
     [
         check('username', 'Username is required').notEmpty(),
         check('email', 'Valid email is required').isEmail(),
@@ -92,7 +93,7 @@ router.post(
  *       500:
  *         description: Server error
  */
-    router.post('/api/auth/login', authController.login);
+    router.post('/login', authController.login);
 
 // GitHub authentication route
 /**
@@ -107,7 +108,7 @@ router.post(
  *       500:
  *         description: Server error
  */
-router.get('/api/auth/github', passport.authenticate('github', { scope: ['user:email'], 
+router.get('/github', passport.authenticate('github', { scope: ['user:email'], 
 callbackURL: 'http://localhost:3000/auth/github/callback' }),
 (req, res) => {
     // Successful authentication, you can redirect or respond as needed
@@ -129,13 +130,13 @@ callbackURL: 'http://localhost:3000/auth/github/callback' }),
  *         description: Server error
  */
 router.get(
-    '/api/auth/github/callback',
+    '/github/callback',
         passport.authenticate('github', { failureRedirect: '/login' }),
         authController.oauthLogin,
-    (req, res) => {
-    // Successful authentication, you can redirect or respond as needed
-    res.redirect('/dashboard'); // Redirect to the dashboard or another page
-    }
+    // (req, res) => {
+    // // Successful authentication, you can redirect or respond as needed
+    // res.redirect('/dashboard'); // Redirect to the dashboard or another page
+    // }
 );
 
 /**
@@ -154,6 +155,6 @@ router.get(
  *       500:
  *         description: Server error
  */
-router.get('api/auth/logout', authMiddleware, authController.logout);
+router.get('/logout', authMiddleware, authController.logout);
 
 module.exports = router;

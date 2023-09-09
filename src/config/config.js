@@ -1,24 +1,26 @@
-const {Client}= require('pg');
+const { Sequelize } = require('sequelize');
 
-const client= new Client(
+const sequelize = new Sequelize(
     {
         host: 'localhost',
         user: 'postgres',
         port: 5432,
         password: "1234",
-        database: 'postgres'
+        database: 'postgres',
+        dialect: 'postgres',
     }
 )
 
-client.connect( (err)=>{
-    if (err){
-        console.log("connection error", err.stack)
-    } else{
-        console.log("connected!")
-    }
-})
+// sequelize
+//     .authenticate()
+//     .then(() => {
+//         console.log('Database connection has been established successfully.');
+//     })
+//     .catch((err) => {
+//         console.error('Unable to connect to the database:', err);
+//     });
 
 
-module.exports= client;
+module.exports = sequelize;
 
 
