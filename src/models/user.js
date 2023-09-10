@@ -31,6 +31,11 @@ const User= sequelize.define('User', {
     oauthAccessToken: {
         type: DataTypes.STRING, // Store the OAuth access token
         allowNull: true,
+},
+
+oauthRefreshToken:{
+    type: DataTypes.STRING, //store the OAuth access token
+    allowNull: true,
 }
     
 })
