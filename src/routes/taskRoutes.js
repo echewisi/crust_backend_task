@@ -44,7 +44,7 @@ const router = express.Router();
  *       500:
  *         description: Server error
  */
-router.post('/api/tasks/create', authMiddleware, taskController.createTask);
+router.post('/create', authMiddleware, taskController.createTask);
 
 // Get all tasks
 /**
@@ -63,7 +63,7 @@ router.post('/api/tasks/create', authMiddleware, taskController.createTask);
  *       500:
  *         description: Server error
  */
-router.get('/api/tasks/list', authMiddleware, taskController.getAllTasks);
+router.get('/list', authMiddleware, taskController.getAllTasks);
 
 // Get a single task by ID
 /**
@@ -92,7 +92,7 @@ router.get('/api/tasks/list', authMiddleware, taskController.getAllTasks);
  *       500:
  *         description: Server error
  */
-router.get('/api/tasks/:taskId', authMiddleware, taskController.getTaskById);
+router.get('/:taskId', authMiddleware, taskController.getTaskById);
 
 // Update a task by ID
 /**
@@ -134,7 +134,7 @@ router.get('/api/tasks/:taskId', authMiddleware, taskController.getTaskById);
  *       500:
  *         description: Server error
  */
-router.put('/api/tasks/:taskId', authMiddleware, taskController.updateTask);
+router.put('/:taskId', authMiddleware, taskController.updateTask);
 
 // Delete a task by ID
 /**
@@ -163,6 +163,6 @@ router.put('/api/tasks/:taskId', authMiddleware, taskController.updateTask);
  *       500:
  *         description: Server error
  */
-router.delete('/api/tasks/:taskId', authMiddleware, taskController.deleteTask);
+router.delete('/:taskId', authMiddleware, taskController.deleteTask);
 
 module.exports = router;

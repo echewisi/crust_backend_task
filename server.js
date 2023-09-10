@@ -43,7 +43,7 @@ app.use('/api/tasks', require('./src/routes/taskRoutes')); // Resource routes (t
 app.use(errorMiddleware);
 
 // Start the server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

@@ -13,7 +13,7 @@ const Task = sequelize.define('Task', {
     },
 
 });
-
+Task.sync()
 Task.belongsTo(User, {
     foreignKey: 'userId', 
 });

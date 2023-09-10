@@ -32,7 +32,9 @@ const User= sequelize.define('User', {
         type: DataTypes.STRING, // Store the OAuth access token
         allowNull: true,
 }
-
+    
 })
+
+User.sync()
 
 module.exports= User;

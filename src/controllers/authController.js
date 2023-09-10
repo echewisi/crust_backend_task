@@ -26,7 +26,7 @@ exports.register = async (req, res) => {
         });
 
         // Generate and send a JWT token for authentication
-        const token = jwt.sign({ user: newUser }, config.jwtSecret);
+        const token = jwt.sign({ user: newUser }, config);
         res.json({ token });
     } catch (error) {
         console.error(error);
@@ -52,7 +52,7 @@ exports.login = async (req, res) => {
         }
 
         // Generate and send a JWT token for authentication
-        const token = jwt.sign({ user }, config.jwtSecret);
+        const token = jwt.sign({ user }, config);
         res.json({ token });
     } catch (error) {
         console.error(error);
@@ -80,7 +80,7 @@ exports.oauthLogin = async (req, res) => {
         }
 
         // Generate a JWT token for the user
-        const token = jwt.sign({ userId: user._id }, config.jwtSecret, { expiresIn: '7d' });
+        const token = jwt.sign({ userId: user._id }, config, { expiresIn: '7d' });
 
         // Respond with the JWT token
         return res.status(200).json({ token });
@@ -102,7 +102,7 @@ exports.logout = (req, res) => {
 
     try {
         // Verify and decode the JWT token
-        jwt.verify(token, config.jwtSecret);
+        jwt.verify(token, config);
 
         // Clear the JWT token (e.g., by removing the cookie or header)
         res.clearCookie('jwt'); // Change this according to how you store the token
