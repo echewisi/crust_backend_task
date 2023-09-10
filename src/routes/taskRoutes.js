@@ -47,6 +47,7 @@ const router = express.Router();
 router.post('/create', authMiddleware, taskController.createTask);
 
 // Get all tasks
+
 /**
  * @swagger
  * /api/tasks/list:

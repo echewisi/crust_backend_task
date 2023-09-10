@@ -16,7 +16,8 @@ const options = {
         
         ],
     },
-    apis: ['../routes/authRoutes.js', '../routes/taskRoutes.js'], 
+    
+    apis: ['./src/routes/authRoutes.js', './src/routes/taskRoutes.js'], 
 };
 
 const specs = swaggerJsdoc(options);
