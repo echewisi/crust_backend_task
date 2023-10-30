@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     const tokenWithoutPrefix = token.replace('Bearer ', '');
 
     try {
-        const decoded = jwt.verify(tokenWithoutPrefix, config.jwtSecret);
+        const decoded = jwt.verify(tokenWithoutPrefix, config);
         req.user = decoded.user; // Attach the user object to the request
         next();
     } catch (error) {

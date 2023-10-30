@@ -11,10 +11,16 @@ const Task = sequelize.define('Task', {
             type: DataTypes.TEXT,
             allowNull: true,
     },
+    userId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: User, // The name of your Users table
+            key: 'id', // The primary key of the Users table
+        },
+        allowNull: false,
+    },
 
 });
 Task.sync()
-Task.belongsTo(User, {
-    foreignKey: 'userId', 
-});
+
 module.exports = Task;

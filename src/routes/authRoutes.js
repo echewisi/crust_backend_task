@@ -8,6 +8,10 @@ const validationMiddleware = require('../middleware/validationMiddleware');
 const authController = require('../controllers/authController');
 const oauthMiddleware = require('../middleware/oauthMiddleware');
 const router = express.Router();
+require("dotenv").config()
+
+
+
 
 /**
  * @swagger
@@ -20,7 +24,7 @@ const router = express.Router();
 // User registration route
 /**
  * @swagger
- * /auth/register:
+ * /api/auth/register:
  *   post:
  *     summary: Register a new user
  *     tags: [Authentication]
@@ -66,7 +70,7 @@ router.post(
   // User login route
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Login and obtain a JWT token
  *     tags: [Authentication]
@@ -95,6 +99,31 @@ router.post(
  */
     router.post('/login', authController.login);
 
+// GitHub authorization link route
+/**
+ * @swagger
+ * /auth/github/authorize:
+ *   get:
+ *     summary: Redirect to OAuth Authorization
+ *     tags: [Authentication]
+ *     description: |
+ *       Click the following link to authorize your application with GitHub:
+ *       [Authorize with GitHub](https://github.com/login/oauth/authorize?client_id=e7200d366c6ab46ef757&scope=user:email&redirect_uri=http://localhost:3000/auth/github/callback)
+ *     responses:
+ *       302:
+ *         description: Redirects to GitHub OAuth Authorization
+ */
+router.get('/github/authorize', (req, res) => {
+    // Generate the GitHub OAuth authorization URL
+    const githubAuthUrl = 'https://github.com/login/oauth/authorize' +
+        `?client_id=${process.env.GITHUB_CLIENT_ID}`;
+
+    // Store the GitHub authorization URL in the session or temporary storage
+    req.session.githubAuthUrl = githubAuthUrl;
+
+    // Redirect to the github consent screen 
+    res.redirect(githubAuthUrl);
+});
 // GitHub authentication route
 /**
  * @swagger
@@ -109,12 +138,7 @@ router.post(
  *         description: Server error
  */
 router.get('/github', oauthMiddleware, passport.authenticate('github', { scope: ['user:email'], 
-callbackURL: 'http://localhost:3000/auth/github/callback' }),
-(req, res) => {
-    // Successful authentication, you can redirect or respond as needed
-    res.redirect('/dashboard'); // Redirect to the dashboard or another page
-}
-);
+callbackURL: 'http://localhost:3000/auth/github/callback?code=:code' }));
 
 // GitHub callback route
 /**
@@ -131,22 +155,20 @@ callbackURL: 'http://localhost:3000/auth/github/callback' }),
  */
 router.get(
     '/github/callback',
-        passport.authenticate('github', { failureRedirect: '/login' }),
-        authController.oauthLogin,
-    // (req, res) => {
-    // // Successful authentication, you can redirect or respond as needed
-    // res.redirect('/dashboard'); // Redirect to the dashboard or another page
-    // }
+    passport.authenticate('github', {
+        failureRedirect: '/login'
+    }),
+    (req, res) => {
+        res.redirect(__dirname + '/dashboard');
+    }
 );
 
 /**
  * @swagger
- * /auth/logout:
+ * /api/auth/logout:
  *   get:
  *     summary: Logout the authenticated user
  *     tags: [Authentication]
- *     security:
- *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  *     responses:
  *       200:
  *         description: User logged out successfully
@@ -154,6 +176,8 @@ router.get(
  *         description: Unauthorized (missing or invalid JWT token)
  *       500:
  *         description: Server error
+ *     security:
+ *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  */
 router.get('/logout', authMiddleware, authController.logout);
 

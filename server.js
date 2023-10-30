@@ -15,6 +15,9 @@ const protectedRoute = require('./src/routes/protectedRoutes'); // Import your p
 // Initialize Express app
 const app = express();
 
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
+
 // Use the corsMiddleware for CORS handling
 app.use(corsMiddleware());
 

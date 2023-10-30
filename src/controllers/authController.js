@@ -62,15 +62,15 @@ exports.login = async (req, res) => {
 
 exports.oauthLogin = async (req, res) => {
     try {
-        // Extract user data from the OAuth provider's response
-        const { username, email, /* other relevant user data */ } = req.body;
+        // User data obtained from the OAuth provider (e.g., GitHub)
+        const { username, email, /* other relevant user data */ } = req.user;
 
         // Check if the user already exists in your database
-        let user = await UserModel.findOne({ email });
+        let user = await User.findOne({ email });
 
         if (!user) {
             // If the user doesn't exist, create a new user account
-            user = new UserModel({
+            user = new User({
                 username,
                 email,
                 // Set other user properties based on the data received
@@ -82,38 +82,28 @@ exports.oauthLogin = async (req, res) => {
         // Generate a JWT token for the user
         const token = jwt.sign({ userId: user._id }, config, { expiresIn: '7d' });
 
-        // Respond with the JWT token
-        return res.status(200).json({ token });
-    } catch (error) {
+        return res.redirect(`/oauth/login.html?token=${token}&callbackURL=http://localhost:3000/oauth/callback`);    } catch (error) {
         console.error('Error during OAuth login:', error);
         return res.status(500).json({ message: 'Server error' });
     }
 };
 
 
+
 exports.logout = (req, res) => {
-    // Assuming you store the user's JWT token in a cookie or header
-    const token = req.cookies.jwt; // Change this according to how you store the token
+    // Assuming you store the user's JWT token in the 'Authorization' header
+    const token = req.header('Authorization');
 
     if (!token) {
         // If no token is present, the user is not logged in
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    try {
-        // Verify and decode the JWT token
-        jwt.verify(token, config);
+    // Clear the 'Authorization' header to log the user out
+    res.removeHeader('Authorization');
 
-        // Clear the JWT token (e.g., by removing the cookie or header)
-        res.clearCookie('jwt'); // Change this according to how you store the token
-
-        // Respond with a success message
-        return res.status(200).json({ message: 'Logout successful' });
-    } catch (error) {
-        // If there's an error while verifying the token, consider it a server error
-        console.error('Error during logout:', error);
-        return res.status(500).json({ message: 'Server error' });
-    }
+    // Respond with a success message
+    return res.status(200).json({ message: 'Logout successful' });
 };
 
-// Implement similar controller functions for "Tasks" CRUD operations
+

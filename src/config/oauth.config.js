@@ -34,6 +34,7 @@ passport.use(
                         oauthRefreshToken: refreshToken,
                     })
                     // You can save or retrieve user data in your database here
+                    await user.save()
                     return done(null, user);
                 } else {
                     // If the user exists, update the OAuth access token

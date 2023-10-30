@@ -10,3 +10,4 @@ router.get('/protected-resource', authMiddleware, (req, res) => {
 });
 
 module.exports = router;
+

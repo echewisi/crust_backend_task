@@ -5,8 +5,8 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "john smith",
-    "email": "john.mar@example.com",
+    "username": "john marston",
+    "email": "john.far@example.com",
     "password": "password123"
 }
 ###
@@ -16,21 +16,27 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "john.mar@example.com",
+    "email": "john.far@example.com",
     "password": "password123"
 }
 
 ###
 
+#oauth github authorization
+GET http://localhost:3000/api/auth/github/authorize
+
+###
 # OAuth GitHub authentication
 GET http://localhost:3000/api/auth/github
+
+
 
 ### Task Requests ###
 
 # Create a new task (requires JWT token)
 POST http://localhost:3000/api/tasks/create
 Content-Type: application/json
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6ImpvaG4gbWFyc3RvbiIsImVtYWlsIjoiam9obi5mYXJAZXhhbXBsZS5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRtYTlObEhnWHgyWmd5MXlxOXIyRTFlN2M2MmI4dUpLaE1KMU9lRThxa2Y3ZWdkQ0RybkpnZSIsIm9hdXRoUHJvdmlkZXIiOm51bGwsIm9hdXRoUHJvdmlkZXJJZCI6bnVsbCwib2F1dGhBY2Nlc3NUb2tlbiI6bnVsbCwib2F1dGhSZWZyZXNoVG9rZW4iOm51bGwsImNyZWF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiJ9LCJpYXQiOjE2OTQ0NzgyMzV9.tH9vO-gBq4tYldM6QzEIwbm3pce2vYgItmYCLbXcaXk
 
 {
     "title": "Task 1",
@@ -41,18 +47,19 @@ Authorization: Bearer YOUR_JWT_TOKEN
 
 # Get all tasks (requires JWT token)
 GET http://localhost:3000/api/tasks/list
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6ImpvaG4gbWFyc3RvbiIsImVtYWlsIjoiam9obi5mYXJAZXhhbXBsZS5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRtYTlObEhnWHgyWmd5MXlxOXIyRTFlN2M2MmI4dUpLaE1KMU9lRThxa2Y3ZWdkQ0RybkpnZSIsIm9hdXRoUHJvdmlkZXIiOm51bGwsIm9hdXRoUHJvdmlkZXJJZCI6bnVsbCwib2F1dGhBY2Nlc3NUb2tlbiI6bnVsbCwib2F1dGhSZWZyZXNoVG9rZW4iOm51bGwsImNyZWF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiJ9LCJpYXQiOjE2OTQ0NzgyMzV9.tH9vO-gBq4tYldM6QzEIwbm3pce2vYgItmYCLbXcaXk
 
 ###
 # Get a single task by ID (requires JWT token)
 GET http://localhost:3000/api/tasks/1
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6ImpvaG4gbWFyc3RvbiIsImVtYWlsIjoiam9obi5mYXJAZXhhbXBsZS5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRtYTlObEhnWHgyWmd5MXlxOXIyRTFlN2M2MmI4dUpLaE1KMU9lRThxa2Y3ZWdkQ0RybkpnZSIsIm9hdXRoUHJvdmlkZXIiOm51bGwsIm9hdXRoUHJvdmlkZXJJZCI6bnVsbCwib2F1dGhBY2Nlc3NUb2tlbiI6bnVsbCwib2F1dGhSZWZyZXNoVG9rZW4iOm51bGwsImNyZWF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiJ9LCJpYXQiOjE2OTQ0NzgyMzV9.tH9vO-gBq4tYldM6QzEIwbm3pce2vYgItmYCLbXcaXk
+
 
 ###
 # Update a task by ID (requires JWT token)
 PUT http://localhost:3000/api/tasks/1
 Content-Type: application/json
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6ImpvaG4gbWFyc3RvbiIsImVtYWlsIjoiam9obi5mYXJAZXhhbXBsZS5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRtYTlObEhnWHgyWmd5MXlxOXIyRTFlN2M2MmI4dUpLaE1KMU9lRThxa2Y3ZWdkQ0RybkpnZSIsIm9hdXRoUHJvdmlkZXIiOm51bGwsIm9hdXRoUHJvdmlkZXJJZCI6bnVsbCwib2F1dGhBY2Nlc3NUb2tlbiI6bnVsbCwib2F1dGhSZWZyZXNoVG9rZW4iOm51bGwsImNyZWF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiJ9LCJpYXQiOjE2OTQ0NzgyMzV9.tH9vO-gBq4tYldM6QzEIwbm3pce2vYgItmYCLbXcaXk
 
 {
     "title": "Updated Task 1",
@@ -62,10 +69,10 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ###
 # Delete a task by ID (requires JWT token)
 DELETE http://localhost:3000/api/tasks/1
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6ImpvaG4gbWFyc3RvbiIsImVtYWlsIjoiam9obi5mYXJAZXhhbXBsZS5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRtYTlObEhnWHgyWmd5MXlxOXIyRTFlN2M2MmI4dUpLaE1KMU9lRThxa2Y3ZWdkQ0RybkpnZSIsIm9hdXRoUHJvdmlkZXIiOm51bGwsIm9hdXRoUHJvdmlkZXJJZCI6bnVsbCwib2F1dGhBY2Nlc3NUb2tlbiI6bnVsbCwib2F1dGhSZWZyZXNoVG9rZW4iOm51bGwsImNyZWF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiJ9LCJpYXQiOjE2OTQ0NzgyMzV9.tH9vO-gBq4tYldM6QzEIwbm3pce2vYgItmYCLbXcaXk
 
 ### Protected Route Request ###
 
 # Access a protected route (requires JWT token)
 GET http://localhost:3000/api/protected-resource
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6ImpvaG4gbWFyc3RvbiIsImVtYWlsIjoiam9obi5mYXJAZXhhbXBsZS5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRtYTlObEhnWHgyWmd5MXlxOXIyRTFlN2M2MmI4dUpLaE1KMU9lRThxa2Y3ZWdkQ0RybkpnZSIsIm9hdXRoUHJvdmlkZXIiOm51bGwsIm9hdXRoUHJvdmlkZXJJZCI6bnVsbCwib2F1dGhBY2Nlc3NUb2tlbiI6bnVsbCwib2F1dGhSZWZyZXNoVG9rZW4iOm51bGwsImNyZWF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiIsInVwZGF0ZWRBdCI6IjIwMjMtMDktMTJUMDA6MjI6NTMuODExWiJ9LCJpYXQiOjE2OTQ0NzgyMzV9.tH9vO-gBq4tYldM6QzEIwbm3pce2vYgItmYCLbXcaXk

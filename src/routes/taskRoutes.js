@@ -19,8 +19,6 @@ const router = express.Router();
  *   post:
  *     summary: Create a new task
  *     tags: [Tasks]
- *     security:
- *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  *     requestBody:
  *       required: true
  *       content:
@@ -43,6 +41,8 @@ const router = express.Router();
  *         description: Unauthorized (missing or invalid JWT token)
  *       500:
  *         description: Server error
+ *     security:
+ *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  */
 router.post('/create', authMiddleware, taskController.createTask);
 
@@ -54,8 +54,6 @@ router.post('/create', authMiddleware, taskController.createTask);
  *   get:
  *     summary: Get all tasks
  *     tags: [Tasks]
- *     security:
- *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  *     responses:
  *       200:
  *         description: List of tasks
@@ -63,6 +61,8 @@ router.post('/create', authMiddleware, taskController.createTask);
  *         description: Unauthorized (missing or invalid JWT token)
  *       500:
  *         description: Server error
+ *     security:
+ *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  */
 router.get('/list', authMiddleware, taskController.getAllTasks);
 
@@ -73,8 +73,6 @@ router.get('/list', authMiddleware, taskController.getAllTasks);
  *   get:
  *     summary: Get a task by ID
  *     tags: [Tasks]
- *     security:
- *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  *     parameters:
  *       - in: path
  *         name: taskId
@@ -92,6 +90,8 @@ router.get('/list', authMiddleware, taskController.getAllTasks);
  *         description: Task not found
  *       500:
  *         description: Server error
+ *     security:
+ *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  */
 router.get('/:taskId', authMiddleware, taskController.getTaskById);
 
@@ -102,8 +102,6 @@ router.get('/:taskId', authMiddleware, taskController.getTaskById);
  *   put:
  *     summary: Update a task by ID
  *     tags: [Tasks]
- *     security:
- *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  *     parameters:
  *       - in: path
  *         name: taskId
@@ -134,6 +132,8 @@ router.get('/:taskId', authMiddleware, taskController.getTaskById);
  *         description: Task not found or not authorized
  *       500:
  *         description: Server error
+ *     security:
+ *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  */
 router.put('/:taskId', authMiddleware, taskController.updateTask);
 
@@ -144,8 +144,6 @@ router.put('/:taskId', authMiddleware, taskController.updateTask);
  *   delete:
  *     summary: Delete a task by ID
  *     tags: [Tasks]
- *     security:
- *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  *     parameters:
  *       - in: path
  *         name: taskId
@@ -163,7 +161,10 @@ router.put('/:taskId', authMiddleware, taskController.updateTask);
  *         description: Task not found or not authorized
  *       500:
  *         description: Server error
+ *     security:
+ *       - BearerAuth: [] # Use Bearer authentication (JWT token)
  */
 router.delete('/:taskId', authMiddleware, taskController.deleteTask);
 
 module.exports = router;
+
